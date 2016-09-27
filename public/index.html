@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Minimum Soundcloud</title>
+</head>
+
+<body>
+    <input type="text" name="q" id="q">
+    <button onclick="handleSubmit()">Search</button>
+
+	<p id="results" style="font-family: sans-serif;"></p>
+
+    <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
+    <script>
+    SC.initialize({
+        client_id: '3916cee1a5bd46f9133b38cc32653752'
+    });
+
+    function handleSubmit() {
+        var input = document.getElementById("q");
+        // find all sounds of buskers licensed under 'creative commons share alike'
+        SC.get('/tracks', {
+            q: input.value
+        }).then(function(tracks) {
+        	console.log(tracks)
+            var output = ""
+            for (var i = 0; i < tracks.length; i++) {
+            	output += tracks[i].title + "<br>" + "<br>"
+            }
+
+            document.getElementById("results").innerHTML = output
+
+        });
+    }
+    </script>
+</body>
+
+</html>
